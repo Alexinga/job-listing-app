@@ -1,0 +1,22 @@
+<section class="p-3 vh-100">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <form [formGroup]="addCompanyForm" (ngSubmit)="onSubmit()">
+                    <div class="mb-3">
+                        <label for="exampleInputEmail1" class="form-label">New Company Name</label>
+                        <input type="text" [formControl]="addCompanyForm.controls.name" class="form-control"
+                            id="exampleInputEmail1" aria-describedby="CompanyName">
+                        @if(invalidCompany) {
+                        <div>
+                            <p class="text-danger">Please Enter a Company Name</p>
+                        </div>
+                        }
+                    </div>
+
+                    <button type="submit" [disabled]="invalidCompany" class="btn btn-primary">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>

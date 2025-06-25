@@ -1,0 +1,30 @@
+<section class="bg-secondary-subtle p-3 vh-100">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="py-2">
+                    <h1 class="text-center">Find Your Next Dream Job</h1>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            @if(isLoading()) {
+            <div class="text-center">
+                <app-spinner />
+            </div>
+            }
+
+            @if(errorCaught()) {
+            <div class="text-center">
+                <p>{{errorCaught()}}</p>
+            </div>
+            }
+
+            @if(!isLoading() && !errorCaught()) {
+            @for (job of loadedJobs; track $index) {
+            <app-job-list-card class="col-12 col-lg-4" [jobListData]="job" />
+            }
+            }
+        </div>
+    </div>
+</section>

@@ -1,0 +1,25 @@
+<div class="container p-3 vh-100">
+    <div class="row">
+        <div class="col-6">
+            <button (click)="inc()">Increment</button>
+        </div>
+        <div class="col-6">
+            <button (click)="dec()">Decrement</button>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <h2>Relearn Signals</h2>
+            <p>Count: {{initialNumber()}}</p>
+
+            @defer (on interaction; prefetch on hover) {
+            @for (singleArr of testArr(); track $index) {
+            <p>{{singleArr}}</p>
+            }
+            } @placeholder {
+            <p>Click me to get from defer</p>
+            }
+        </div>
+    </div>
+
+</div>

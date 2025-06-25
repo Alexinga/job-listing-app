@@ -1,0 +1,138 @@
+<section class="p-3 vh-100">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <h2>Add Job</h2>
+            </div>
+        </div>
+        <form [formGroup]="addJobForm" (ngSubmit)="onAddNewJob()" class="row">
+            <div class="col-12">
+                <label for="jobTitle">Job Title</label>
+                <input type="text" id="jobTitle" name="jobTitle" class="form-control" formControlName="jobTitle">
+
+                @if (invalidJobTitle) {
+                <p class="text-danger">
+
+                    <span>Please enter a Title</span>
+                </p>
+                }
+
+            </div>
+            <div class="col-4" formGroupName="jobDescriptionParent">
+                @for (jobTypeRadio of jobTypeRadioArr(); let i = $index; track $index) {
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" formControlName="jobTypeRadio" name="jobTypeRadio"
+                        [id]="'jobTypeRadio' + i" [value]="jobTypeRadio">
+                    <label class="form-check-label" [for]="'jobTypeRadio' + i">
+                        {{jobTypeRadio}}
+                    </label>
+                </div>
+                }
+            </div>
+            <div class="col-4" formGroupName="jobDescriptionParent">
+                @for(positionRadio of positionRadioArr(); let i = $index; track $index) {
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" formControlName="positionRadio" name="positionRadio"
+                        [id]="'positionRadio' + i" [value]="positionRadio">
+                    <label class="form-check-label" [for]="'positionRadio' + i">
+                        {{positionRadio}}
+                    </label>
+                </div>
+                }
+            </div>
+            <div class="col-4" formGroupName="jobDescriptionParent">
+                <label for="salary">Salary</label>
+                <input type="number" id="salary" name="salary" class="form-control" formControlName="salary">
+                @if (invalidSalary) {
+                <p class="text-danger">
+
+                    <span>Please enter a Salary</span>
+                </p>
+                }
+            </div>
+
+            <div class="col-4" formGroupName="locationParent">
+                <select class="form-select" id="country" formControlName="country" name="country">
+                    <option value="" disabled selected>Please Select A Country</option>
+                    @for (country of locationArr(); track $index) {
+                    <option [value]="country.country">{{country.country}}
+                    </option>
+                    }
+                </select>
+                @if (invalidLocationCountry) {
+                <p class="text-danger">Please Select a Country</p>
+                }
+            </div>
+
+            <div class="col-4" formGroupName="locationParent">
+
+                <select class="form-select" id="state" formControlName="state" name="state">
+                    <option value="" disabled selected>Please Select A State</option>
+                    @for (state of selectedStateArr(); track $index) {
+                    <option [value]="state">{{state}}</option>
+                    }
+                </select>
+                @if (invalidLocationState) {
+                <p class="text-danger">Please Select a State</p>
+                }
+            </div>
+
+            <div class="col-4" formGroupName="locationParent">
+                <select id="cities" class="form-select" formControlName="city" name="city">
+                    <option value="" selected disabled>Please Select A City</option>
+                    @for (city of selectedCitiesArr(); track $index) {
+                    <option [value]="city">{{city}}</option>
+                    }
+                </select>
+                @if (invalidLocationCity) {
+                <p class="text-danger">Please Select a City</p>
+                }
+            </div>
+
+            <div class="col-4" formGroupName="contactParent">
+                <label for="contactName" class="form-label">Name</label>
+                <input type="text" class="form-control" id="contactName" formControlName="contactName"
+                    name="contactName">
+                @if (invalidContactName) {
+                <p class="text-danger">
+
+                    <span>Please enter a name</span>
+                </p>
+                }
+            </div>
+            <div class="col-4" formGroupName="contactParent">
+                <label for="contactPhone" class="form-label">Phone Number</label>
+                <input type="tel" class="form-control" id="contactPhone" formControlName="contactPhone"
+                    name="contactPhone">
+                @if (invalidContactPhone) {
+                <p class="text-danger">
+
+                    <span>Please enter a phone number</span>
+                </p>
+                }
+            </div>
+            <div class="col-4" formGroupName="contactParent">
+                <label for="contactEmail" class="form-label">Email address</label>
+                <input type="email" class="form-control" id="contactEmail" formControlName="contactEmail"
+                    name="contactEmail">
+                @if (invalidContactEmail) {
+                <p class="text-danger">
+
+                    <span>Please enter a email</span>
+                </p>
+                }
+            </div>
+            <div class="col-12">
+                <div class="form-floating">
+                    <textarea name="jobDescription" formControlName="jobDescription" class="form-control"
+                        placeholder="Leave a comment here" id="floatingTextarea"></textarea>
+                    <label for="floatingTextarea">Comments</label>
+                </div>
+            </div>
+            <div>
+
+                <button class="btn btn-primary" [disabled]="addJobForm.invalid">Add Job</button>
+            </div>
+        </form>
+    </div>
+</section>

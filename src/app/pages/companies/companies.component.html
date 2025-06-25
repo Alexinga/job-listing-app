@@ -1,0 +1,29 @@
+<section class="py-3 vh-100">
+
+    <div class="container">
+        <div class="row pb-3">
+            <div class="col-12">
+                <a class="btn btn-primary" [routerLink]="['/companies/add']">Add Company</a>
+            </div>
+        </div>
+        <div class="row">
+            @if(isLoading()) {
+            <div class="text-center">
+                <app-spinner />
+            </div>
+            }
+
+            @if(errorCaught()) {
+            <div class="text-center">
+                <p>{{errorCaught()}}</p>
+            </div>
+            }
+
+            @if(!isLoading() && !errorCaught()) {
+            @for (company of companies; track $index) {
+            <app-company-list-card class="col-12 col-md-4" [companyList]="company" />
+            }
+            }
+        </div>
+    </div>
+</section>

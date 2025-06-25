@@ -1,0 +1,46 @@
+<div class="col-md-7 mx-auto">
+    <div class="container">
+        @if(isLoading()) {
+        <div class="row">
+            <div class="col-12 text-center">
+                <app-spinner />
+            </div>
+        </div>
+        }
+        @if(!isLoading()) {
+
+        <form [formGroup]="registerForm" (ngSubmit)="onRegister()" class="row p-3 bg-secondary-subtle">
+            <div class="col-12">
+                <p>Register Form</p>
+            </div>
+            @if(errMsg()) {
+            <div class="col-12">
+                <p class="text-danger">{{errMsg()}}</p>
+            </div>
+            }
+            <div class="col-12">
+                <label for="registerEmail" class="form-label">Email address</label>
+                <input type="email" formControlName="registerEmail" name="registerEmail" class="form-control"
+                    id="registerEmail">
+                @if(invalidRegisterEmail) {
+                <p class="text-danger">Please enter a valid email</p>
+                }
+            </div>
+            <div class="col-12">
+                <label for="registerPassword" class="form-label">Password</label>
+                <input type="password" formControlName="registerPassword" name="registerPassword" class=" form-control"
+                    id="registerPassword">
+                @if(invalidRegisterPassword) {
+                <p class="text-danger">Please enter a password</p>
+                }
+            </div>
+            <div class="pt-2">
+
+                <button type="submit" [disabled]="registerForm.invalid" class="btn btn-primary">Submit</button>
+            </div>
+            <a class="text-center" [routerLink]="['/auth/login']" routerLinkActive="router-link-active">Already have and
+                account? Click Here</a>
+        </form>
+        }
+    </div>
+</div>

@@ -1,0 +1,9 @@
+<div class="card mb-2">
+    <div class="card-body">
+        <h5 class="card-title">{{companyList().name}}</h5>
+        <p class="card-text">{{companyList().created_at | date}}</p>
+        <!-- <button (click)="onDeleteCompany()" class="btn btn-primary me-2">Delete</button> -->
+        <a [routerLink]="['/job/add/', companyList().name, companyList().id]" routerLinkActive="router-link-active"
+            class="btn btn-primary">Add Job</a>
+    </div>
+</div>
