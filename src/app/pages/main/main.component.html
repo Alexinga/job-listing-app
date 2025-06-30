@@ -7,8 +7,23 @@
                 </div>
             </div>
         </div>
-        <div class="row">
-            @if(isLoading()) {
+        <div class="row" *ngIf="jobLists$ | async as loadedJobList;">
+            @if (loadedJobList.isLoading) {
+            <div class="col-12">
+                <div class="text-center">
+                    <app-spinner />
+                </div>
+            </div>
+            } @else if (loadedJobList.errorMsg) {
+            <div class="col-12">
+                <p class="text-center text-danger">{{loadedJobList.errorMsg}}</p>
+            </div>
+            } @else if (loadedJobList.jobs.length > 0) {
+            @for (job of loadedJobList.jobs; track $index) {
+            <app-job-list-card class="col-12 col-lg-4" [jobListData]="job" />
+            }
+            }
+            <!-- @if(isLoading()) {
             <div class="text-center">
                 <app-spinner />
             </div>
@@ -24,7 +39,7 @@
             @for (job of loadedJobs; track $index) {
             <app-job-list-card class="col-12 col-lg-4" [jobListData]="job" />
             }
-            }
+            } -->
         </div>
     </div>
 </section>

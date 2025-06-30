@@ -6,8 +6,26 @@
                 <a class="btn btn-primary" [routerLink]="['/companies/add']">Add Company</a>
             </div>
         </div>
-        <div class="row">
-            @if(isLoading()) {
+        <div class="row" *ngIf="companies$ | async as loadedCompanies;">
+            @if(loadedCompanies.isLoading) {
+            <div class="col-12">
+                <div class="text-center">
+                    <app-spinner />
+                </div>
+            </div>
+            } @else if (loadedCompanies.errorMsg) {
+            <div class="col-12">
+                <div class="text-center">
+                    <p class="text-danger">{{loadedCompanies.errorMsg}}</p>
+                </div>
+            </div>
+            } @else if (loadedCompanies.companies.length > 0) {
+            @for (company of loadedCompanies.companies; track $index) {
+            <app-company-list-card class="col-12 col-md-4" [companyList]="company" (companyDelete)="onDeleteChange()" />
+            }
+            }
+
+            <!-- @if(isLoading()) {
             <div class="text-center">
                 <app-spinner />
             </div>
@@ -23,7 +41,9 @@
             @for (company of companies; track $index) {
             <app-company-list-card class="col-12 col-md-4" [companyList]="company" />
             }
-            }
+            } -->
+
+
         </div>
     </div>
 </section>

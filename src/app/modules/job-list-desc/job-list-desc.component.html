@@ -1,27 +1,40 @@
 <section class="p-3 vh-100">
     <div class="container">
-        <div class="row">
-            @if(isLoading()) {
+        <div class="row" *ngIf="jobData$ | async as jobListData">
+            @if(jobListData.isLoading) {
             <div class="col-12 text-center">
 
                 <app-spinner />
             </div>
-            } @else {
-            @if(selectedJob()) {
+            }
+
+            @else if(jobListData.jobs) {
             <div class="col-12">
-                <h2>{{selectedJob()?.title}}</h2>
-                <h4>{{selectedJob()?.job_type}}</h4>
-                <p>{{selectedJob()?.description}}</p>
+                <h2>{{jobListData.jobs.title}}</h2>
+                <h4>{{jobListData.jobs.job_type}}</h4>
+                <p>{{jobListData.jobs.description}}</p>
                 <button class="btn btn-primary" (click)="onDeleteJobPost()">Delete</button>
             </div>
-            } @else {
+            }
+            @else if(jobListData.errorMsg) {
             <div class="col-12">
-
+                <p class="text-center text-danger">{{jobListData.errorMsg}}</p>
+            </div>
+            }
+            @else {
+            <div class="col-12">
                 <p class="text-danger">Job Not Found!</p>
             </div>
             }
-            }
 
+            <!-- @for (selectedJob of jobListDesc.jobs; track $index) {
+            <div class="col-12">
+                <h2>{{selectedJob.title}}</h2>
+                <h4>{{selectedJob.job_type}}</h4>
+                <p>{{selectedJob.description}}</p>
+                <button class="btn btn-primary" (click)="onDeleteJobPost()">Delete</button>
+            </div>
+            } -->
         </div>
     </div>
 </section>

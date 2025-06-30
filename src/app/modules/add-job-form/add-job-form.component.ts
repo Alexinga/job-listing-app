@@ -11,6 +11,7 @@ import { LOCATION_DATA } from '../../data/json/locationJSON';
 import { ActivatedRoute, CanDeactivateFn, Router } from '@angular/router';
 import { JobListService } from '../../data/service/joblist.service';
 import { NewJobList } from '../../data/schema/jobList';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-add-job-form',
@@ -199,15 +200,18 @@ export class AddJobFormComponent {
   onAddNewJob() {
     const newJobObj = this.buildJobPayLoad();
 
-    const subscription = this.jobListService.postJobList(newJobObj).subscribe({
-      next: () => {
-        this.submitted = true;
-        this.addJobForm.reset();
-        this.route.navigate(['/'], { replaceUrl: true });
-      },
-    });
+    this.jobListService
+      .postJobList(newJobObj)
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: () => {
+          this.submitted = true;
+          this.addJobForm.reset();
+          this.route.navigate(['/'], { replaceUrl: true });
+        },
+      });
 
-    this.destroyRef.onDestroy(() => subscription.unsubscribe());
+    // this.destroyRef.onDestroy(() => subscription.unsubscribe());
   }
 }
 

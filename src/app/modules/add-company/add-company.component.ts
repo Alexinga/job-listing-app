@@ -7,6 +7,8 @@ import {
 } from '@angular/forms';
 import { CompanyService } from '../../data/service/company.service';
 import { Router } from '@angular/router';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { map } from 'rxjs';
 
 @Component({
   selector: 'app-add-company',
@@ -36,24 +38,40 @@ export class AddCompanyComponent {
     const nameToCheck = this.addCompanyForm.controls.name
       .value!.trim()
       .toLowerCase();
-    const existingNames = this.companyService
-      .companyData()
-      .map((data) => data.name.trim().toLowerCase());
-    if (existingNames.includes(nameToCheck)) {
-      alert('Company name already exists');
-      this.addCompanyForm.reset();
-      return;
-    }
+    this.companyService
+      .getCompanies()
+      .pipe(
+        map((companies) =>
+          companies.map((company) => company.name.trim().toLowerCase())
+        ),
+        takeUntilDestroyed(this.destroyRef)
+      )
+      .subscribe((existingNames) => {
+        if (existingNames.includes(nameToCheck)) {
+          alert('Company name already exists');
+          this.addCompanyForm.reset();
+          return;
+        }
+      });
+    // const existingNames = this.companyService
+    //   .companyData()
+    //   .map((data) => data.name.trim().toLowerCase());
+    // if (existingNames.includes(nameToCheck)) {
+    //   alert('Company name already exists');
+    //   this.addCompanyForm.reset();
+    //   return;
+    // }
 
     const newCompany = {
       created_at: new Date().toISOString(),
       name: this.addCompanyForm.controls.name.value!,
     };
 
-    const subscription = this.companyService
+    this.companyService
       .postCompanies(newCompany)
+      .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
-        next: (res) => {
+        next: () => {
           this.addCompanyForm.reset();
           this.router.navigate(['/companies'], { replaceUrl: true });
         },
@@ -62,6 +80,6 @@ export class AddCompanyComponent {
         },
       });
 
-    this.destroyRef.onDestroy(() => subscription.unsubscribe());
+    // this.destroyRef.onDestroy(() => subscription.unsubscribe());
   }
 }
