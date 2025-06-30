@@ -1,15 +1,14 @@
-import { AddCompanyComponent } from '../../modules/add-company/add-company.component';
+import { AddCompanyComponent } from '../../features/companies/components/add-company/add-company.component';
 import {
   AddJobFormComponent,
   canLeaveAddFormPage,
-} from '../../modules/add-job-form/add-job-form.component';
+} from '../../features/jobs/components/add-job-form/add-job-form.component';
 import {
   JobListDescComponent,
   resolveJobTitles,
-} from '../../modules/job-list-desc/job-list-desc.component';
-import { TestComponent } from '../../modules/test/test.component';
-import { CompaniesComponent } from '../../pages/companies/companies.component';
-import { MainComponent } from '../../pages/main/main.component';
+} from '../../features/jobs/components/job-list-desc/job-list-desc.component';
+import { CompaniesComponent } from '../../features/companies/pages/companies/companies.component';
+import { MainComponent } from '../../features/jobs/pages/main/main.component';
 
 export const routes = [
   {
@@ -33,9 +32,5 @@ export const routes = [
   {
     path: 'companies/add',
     component: AddCompanyComponent,
-  },
-  {
-    path: 'test',
-    component: TestComponent,
   },
 ];

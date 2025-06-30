@@ -1,8 +1,8 @@
 import { Routes } from '@angular/router';
 import { AuthLayoutComponent } from './layout/auth-layout/auth-layout.component';
 import { ContentLayoutComponent } from './layout/content-layout/content-layout.component';
-import { LoginComponent } from './modules/login/login.component';
-import { RegisterComponent } from './modules/register/register.component';
+import { LoginComponent } from './features/auth/components/login/login.component';
+import { RegisterComponent } from './features/auth/components/register/register.component';
 import { authGuard } from './core/guard/auth.guard';
 import { routes as childRoutes } from './core/routes/content-routes';
 
