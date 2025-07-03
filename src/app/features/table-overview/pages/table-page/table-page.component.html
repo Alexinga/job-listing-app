@@ -1,0 +1,18 @@
+<section class="p-3 min-vh-100 bg-body-secondary">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <app-table [tableHeaderName]="['#', 'first', 'last', 'handle']" [childObsData$]="parentObsData$">
+                    <ng-template #rowTemplate let-job let-i="index">
+                        <tr>
+                            <th scope="row">{{i + 1}}</th>
+                            <td>{{job.title}}</td>
+                            <td>{{job.position}}</td>
+                            <td>{{job.salary}}</td>
+                        </tr>
+                    </ng-template>
+                </app-table>
+            </div>
+        </div>
+    </div>
+</section>

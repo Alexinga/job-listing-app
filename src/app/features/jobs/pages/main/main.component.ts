@@ -15,6 +15,7 @@ export class MainComponent {
   // isLoading = signal<boolean>(false);
   // errorCaught = signal<string>('');
   jobListService = inject(JobListService);
+
   // destroyRef = inject(DestroyRef);
   jobLists$ = this.jobListService.getJobList().pipe(
     map((data) => ({ jobs: data, isLoading: false, errorMsg: null })),

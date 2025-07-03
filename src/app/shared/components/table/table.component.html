@@ -1,0 +1,34 @@
+<ng-container *ngIf="jobList$() | async as loadedJobs">
+    <table class="table table-striped" [class.table-container]="!loadedJobs.isLoading">
+        <thead>
+            <tr>
+                @for ( tableName of capitalizedHeadName(); track $index) {
+                <th scope="col">{{tableName}}</th>
+                }
+            </tr>
+        </thead>
+        <tbody>
+            @if(loadedJobs.isLoading) {
+            <tr>
+                <td colspan="100%" class="text-center py-3">
+                    <app-spinner />
+                </td>
+            </tr>
+            } @else if(loadedJobs.errorMsg) {
+            <tr>
+                <td colspan="100%" class="text-center py-3">
+                    <p class="text-danger text-center">{{loadedJobs.errorMsg}}</p>
+                </td>
+            </tr>
+
+            } @else if(loadedJobs.obsData.length > 0) {
+
+            @for (job of loadedJobs.obsData; track $index) {
+            <ng-container *ngTemplateOutlet="rowTemplate(); context: {$implicit: job, index: $index}">
+            </ng-container>
+            }
+            }
+
+        </tbody>
+    </table>
+</ng-container>

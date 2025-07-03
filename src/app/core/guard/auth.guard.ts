@@ -5,8 +5,15 @@ export const authGuard: CanMatchFn = (route, segments) => {
   const router = inject(Router);
 
   const token = localStorage.getItem('authToken');
-  if (token) {
-    return true;
-  }
-  return router.createUrlTree(['/auth/login']);
+  const expiredToken = Number(localStorage.getItem('expiresAtTime') || 0);
+
+  const isExpired = Date.now() > expiredToken;
+  const isInvalid = !token || isExpired;
+
+  return isInvalid ? router.createUrlTree(['/auth/login']) : true;
+  // if (isInvalid) {
+  //   router.createUrlTree(['/auth/login']);
+  //   return false;
+  // }
+  // return true;
 };

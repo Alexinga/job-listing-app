@@ -9,8 +9,9 @@ import {
 } from '../../features/jobs/components/job-list-desc/job-list-desc.component';
 import { CompaniesComponent } from '../../features/companies/pages/companies/companies.component';
 import { MainComponent } from '../../features/jobs/pages/main/main.component';
+import { TablePageComponent } from '../../features/table-overview/pages/table-page/table-page.component';
 
-export const routes = [
+export const childRoutes = [
   {
     path: '',
     component: MainComponent,
@@ -32,5 +33,9 @@ export const routes = [
   {
     path: 'companies/add',
     component: AddCompanyComponent,
+  },
+  {
+    path: 'table',
+    component: TablePageComponent,
   },
 ];
