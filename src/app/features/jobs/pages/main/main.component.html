@@ -1,5 +1,5 @@
 <section class="bg-secondary-subtle p-3 min-vh-100">
-    <div class="container">
+    <div class="container" *ngIf="jobLists$ | async as loadedJobList;">
         <div class="row">
             <div class="col-12">
                 <div class="py-2">
@@ -7,7 +7,7 @@
                 </div>
             </div>
         </div>
-        <div class="row" *ngIf="jobLists$ | async as loadedJobList;">
+        <div class="row">
             @if (loadedJobList.isLoading) {
             <div class="col-12">
                 <div class="text-center">
@@ -19,8 +19,8 @@
                 <p class="text-center text-danger">{{loadedJobList.errorMsg}}</p>
             </div>
             } @else if (loadedJobList.jobs.length > 0) {
-            @for (job of loadedJobList.jobs; track $index) {
-            <app-job-list-card class="col-12 col-lg-4" [jobListData]="job" />
+            @for (job of slicedJobs(); track $index) {
+            <app-job-list-card class="col-12 col-lg-4 mb-2" [jobListData]="job" />
             }
             }
             <!-- @if(isLoading()) {
@@ -41,6 +41,13 @@
             }
             } -->
         </div>
+        <div class="row">
+            <div class="col-12">
+                <app-pagination />
+            </div>
+        </div>
     </div>
+
+
 
 </section>

@@ -9,6 +9,7 @@ import { CompanyService } from '../../services/company.service';
 import { Router } from '@angular/router';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { map } from 'rxjs';
+import { ToastService } from '../../../../shared/service/toast.service';
 
 @Component({
   selector: 'app-add-company',
@@ -20,6 +21,7 @@ export class AddCompanyComponent {
   private companyService = inject(CompanyService);
   private destroyRef = inject(DestroyRef);
   private router = inject(Router);
+  private toastService = inject(ToastService);
 
   addCompanyForm = new FormGroup({
     name: new FormControl('', {
@@ -73,6 +75,10 @@ export class AddCompanyComponent {
       .subscribe({
         next: () => {
           this.addCompanyForm.reset();
+          this.toastService.show(
+            'Company Created',
+            'your company was added successfully'
+          );
           this.router.navigate(['/companies'], { replaceUrl: true });
         },
         error: (err: Error) => {

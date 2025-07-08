@@ -1,0 +1,4 @@
+@for (toast of toastService.toasts(); track $index) {
+
+<ngb-toast [header]="toast.header" [autohide]="true" (hidden)="toastService.close(toast)">{{toast.body}}</ngb-toast>
+}

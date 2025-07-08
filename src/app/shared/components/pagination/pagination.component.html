@@ -1,0 +1,4 @@
+<ngb-pagination [collectionSize]="collection()" [pageSize]="pageSize()" [page]="pageNum()" [rotate]="true"
+    [ellipses]="false" (pageChange)="onPageChange($event)"></ngb-pagination>
+<hr />
+<pre>Current Page: {{pageNum()}}</pre>
